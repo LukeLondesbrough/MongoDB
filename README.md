@@ -32,3 +32,32 @@ This provides a measure of security if one where to fail and makes it much easie
 - If the primary server fails, the secondary servers automaticly elect one to become the new primary.
 - New clients will automaticly connect to the new primary server.
 ![Replica Set](./replicaset.png)
+
+
+##### Advantages
+
+- The data is almost always available.
+- In the event of failure the data remains available and proctected via redundancy
+
+##### Disadvantaged
+- Increased storage needed
+- Complex to set up in a large deployments
+- A slight delay between primary and secondary servers
+
+#### What is Sharding
+Sharding in the process of splitting data across multiple servers in order to support large datasets.
+![Sharding eg](./sharding.png)
+
+##### How does it work?
+- Each shard contains a subset of the data.
+- Config servers store meta data and rounting information
+- Mongos router directs queries to correct shard or shards
+- Shard keys determine how the data is split.
+
+##### Advantages
+- Capable of handling huge datasets
+- Increased read/write capacity
+- Capable of horizontal scaling
+##### Disadvantages
+- Complex architecture
+- Hard to manage and maintain backups
