@@ -61,3 +61,11 @@ Sharding in the process of splitting data across multiple servers in order to su
 ##### Disadvantages
 - Complex architecture
 - Hard to manage and maintain backups
+#### Use Cases
+##### Ebay
+- MongoDB is used to give real time analytics of large volumes of user data.
+- They chose MongoDB specifically to for its flexible schema and high write throughput.
+##### EA Games
+- They collect real time game telemtry for balancing and analysis.
+- MongoDB is used to store large volumes of event logs with different loose schema.
+- This allows for quicker and more efficent querying to make live dashboards for game statistics.
