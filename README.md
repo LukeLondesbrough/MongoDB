@@ -69,3 +69,76 @@ Sharding in the process of splitting data across multiple servers in order to su
 - They collect real time game telemtry for balancing and analysis.
 - MongoDB is used to store large volumes of event logs with different loose schema.
 - This allows for quicker and more efficent querying to make live dashboards for game statistics.
+
+### MongoDB Commands
+#### Examples using Starwars dataset
+
+Simple command to query the database.  `db.df_name.find()`
+``` 
+db.characters.find({name: "Luke Skywalker"})
+
+-db.characters.find({name: "Ackbar"}, {_id: 0 , name:1, "species.name":1})
+```
+`_id:0` Means the id key of that document will not be shown. They only thing shown will be name and species name in that example.
+
+
+
+Using the `$in` command we can filter by specific document characteristics
+```
+db.characters.find(
+  {
+    eye_color:{
+      $in:["yellow", "orange"]
+    }
+  },
+  {
+    name:1
+  }
+)
+```
+
+This command will display all characters that have yellow or orange eyes.
+
+
+
+This commands use the `db.df_name.aggregate` function to find the average of the mass characteristic grouped by specices
+
+```
+db.characters.aggregate([
+  {
+    $group: {
+      _id: "$species.name",
+      avg: { $avg: "$mass" },
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $match: {
+      avg: { $ne: null }
+    }
+  },
+  {
+    $sort: { avg: 1 }
+  }
+]).toArray
+```
+the `.toArray` doesnt affect the data being queried but just formats it in a nicer way.
+
+
+The `$and` & `$or` can be used to further specifiy a query
+```
+db.characters.find(
+  {   $and:[ 
+    {gender: "female"},
+    {eye_color:"blue"}
+    ]
+  },
+  {
+    name:1,
+    _id:0
+  }
+)
+``` 
+
+can use the ` db.characters.distinct("species.name")` to get all unique values in document.
+
